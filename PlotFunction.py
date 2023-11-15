@@ -180,7 +180,9 @@ def plot_3d_function():
     start_level = np.min(Z_surf)+0.01
     end_level = np.max(Z_surf)-0.01
     curr_level = (start_level+end_level)/2
-    def update(frame):
+    
+    # Constant frame updates for moving the contour line
+    def update(frame): 
       nonlocal curr_level, start_level, end_level, contour
       if curr_level > end_level:
         curr_level = end_level
