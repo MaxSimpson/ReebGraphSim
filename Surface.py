@@ -52,7 +52,6 @@ def generate_klein_bottle(x, y):
 def generate_bowl(x, y):
   return x**2 + y**2 - 1
 
-
-
+# Flat 
 def generate_flat(x, y):
   return np.zeros_like(x)

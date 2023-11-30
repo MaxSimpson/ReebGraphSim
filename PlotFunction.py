@@ -53,7 +53,6 @@ def plot_3d_function():
     # Hill peakedness
     sigma = 3 
 
-
     # Generate Surface Values (For Rendering)
     x = np.linspace(-x_length, x_length, 31)
     y = np.linspace(-y_length, y_length, 31)
@@ -93,8 +92,6 @@ def plot_3d_function():
     
     # Find the indices of the absolute min&max, local min&max, and saddle points
     # Absolutes
-
-    # abs_min_indices = (M_surf == ndimage.minimum_filter(M_surf, cval=np.inf if critical_values_at_edges else -np.inf, size=3, mode='constant'))
     abs_min_indices = (M_surf == np.min(M_surf))
     abs_max_indices = (M_surf == np.max(M_surf))
     
