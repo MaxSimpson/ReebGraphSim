@@ -94,15 +94,13 @@ def plot_3d_function():
     # Find the indices of the absolute min&max, local min&max, and saddle points
     # Absolutes
 
-    abs_min_indices = (M_surf == ndimage.minimum_filter(M_surf, cval=np.inf if critical_values_at_edges else -np.inf, size=3, mode='constant'))
+    # abs_min_indices = (M_surf == ndimage.minimum_filter(M_surf, cval=np.inf if critical_values_at_edges else -np.inf, size=3, mode='constant'))
+    abs_min_indices = (M_surf == np.min(M_surf))
     abs_max_indices = (M_surf == np.max(M_surf))
     
-    local_min_indices = None
-    local_max_indices = None
     # Locals
     local_min_indices = np.logical_and(ndimage.minimum_filter(M_surf, cval=np.inf if critical_values_at_edges else -np.inf, size=3, mode='constant') == M_surf, ~abs_min_indices)
-    local_min_indices = np.logical_and(ndimage.minimum_filter(M_surf, cval=np.inf, size=3, mode='constant') == M_surf, ~abs_min_indices)
-    local_max_indices = np.logical_and(ndimage.maximum_filter(M_surf, cval=-np.inf, size=3, mode='constant') == M_surf, ~abs_max_indices)
+    local_max_indices = np.logical_and(ndimage.maximum_filter(M_surf, cval=-np.inf if critical_values_at_edges else np.inf, size=3, mode='constant') == M_surf, ~abs_max_indices)
 
 
     # Saddles
@@ -139,7 +137,6 @@ def plot_3d_function():
     fig.canvas.mpl_connect('key_press_event', on_key)
     
     # Plot the surface
-    #surf = ax.plot_surface(X_surf, Y_surf, Z_surf, cmap='viridis', facecolors=cm.jet(color_func(X_surf, Y_surf, Z_surf)), rstride=1, cstride=1, alpha=0.5)
     surf = ax.plot_surface(X_surf, Y_surf, Z_surf, cmap='viridis', facecolors=cm.jet((M_surf-np.min(M_surf))/(np.max(M_surf)-np.min(M_surf))), rstride=1, cstride=1, alpha=0.5)
     
     # Draw points at the absolutes, locals, and saddles
