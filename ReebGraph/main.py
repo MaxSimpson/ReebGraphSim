@@ -7,6 +7,7 @@ from OpenGL.GLUT import *
 # Our libraries
 import Terrain
 import OpenGLHandler
+import time
 
 
 openGLHandler = OpenGLHandler.OpenGLHandler()
@@ -20,6 +21,8 @@ while not glfw.window_should_close(openGLHandler.get_window()):
   openGLHandler.update()
 
   # Render terrain model
+  openGLHandler.rotate_camera()
+  time.sleep(0.05)
   terrain.render()
 
   # Swap displayed window after re-rendering

@@ -5,6 +5,10 @@ from OpenGL.GLUT import *
 
 class OpenGLHandler:
   def __init__(self):
+    # Camera coordinates
+    self.camera_coordinates = [0, 0, 5]
+    self.camera_target = [0, 0, 0]
+
     # Initialize GLFW
     if not glfw.init():
       raise Exception("GLFW initialization failed")
@@ -37,7 +41,7 @@ class OpenGLHandler:
     # Set up view matrix
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
-    gluLookAt(0, 0, 5, 0, 0, 0, 0, 1, 0)
+    gluLookAt(*self.camera_coordinates, 0, 0, 0, 0, 1, 0)
 
     # Set up lighting
     glEnable(GL_LIGHTING)
@@ -48,3 +52,6 @@ class OpenGLHandler:
     # Set material properties
     glEnable(GL_COLOR_MATERIAL)
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE)
+
+  def rotate_camera(self):
+    self.camera_coordinates[1] += 0.01
