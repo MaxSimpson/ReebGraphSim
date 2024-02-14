@@ -3,11 +3,16 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
+import math
+
 class OpenGLHandler:
   def __init__(self):
     # Camera coordinates
-    self.camera_coordinates = [0, 0, 5]
+    self.camera_position = [5, 2, 5]
     self.camera_target = [0, 0, 0]
+
+    self.angle = 0.01 
+    self.radius = 5
 
     # Initialize GLFW
     if not glfw.init():
@@ -41,7 +46,7 @@ class OpenGLHandler:
     # Set up view matrix
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
-    gluLookAt(*self.camera_coordinates, 0, 0, 0, 0, 1, 0)
+    gluLookAt(*self.camera_position, 0, 0, 0, 0, 1, 0)
 
     # Set up lighting
     glEnable(GL_LIGHTING)
@@ -53,5 +58,17 @@ class OpenGLHandler:
     glEnable(GL_COLOR_MATERIAL)
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE)
 
-  def rotate_camera(self):
-    self.camera_coordinates[1] += 0.01
+  def set_camera_target(self, new_target):
+    self.camera_target = new_target
+
+  def set_camera_position(self, new_position):
+    self.camera_position = new_position
+
+  def rotate_camera_circle(self):
+    # Rotate Camera Position
+    self.angle += 0.01
+    x = self.radius * math.cos(self.angle)
+    z = self.radius * math.sin(self.angle)
+
+    # Set new camera
+    self.camera_position = (x, self.camera_position[1], z)

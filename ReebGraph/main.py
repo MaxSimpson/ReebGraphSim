@@ -20,9 +20,11 @@ while not glfw.window_should_close(openGLHandler.get_window()):
   # OpenGL update per frame
   openGLHandler.update()
 
-  # Render terrain model
-  openGLHandler.rotate_camera()
+  # Rotate Camera
+  openGLHandler.rotate_camera_circle()
   time.sleep(0.05)
+
+  # Render terrain model
   terrain.render()
 
   # Swap displayed window after re-rendering
