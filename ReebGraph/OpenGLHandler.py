@@ -11,7 +11,8 @@ class OpenGLHandler:
     self.camera_position = [5, 2, 5]
     self.camera_target = [0, 0, 0]
 
-    self.angle = 0.01 
+    self.rotate_angle = 0.03
+    self.angle = 0
     self.radius = 5
 
     # Initialize GLFW
@@ -66,7 +67,7 @@ class OpenGLHandler:
 
   def rotate_camera_circle(self):
     # Rotate Camera Position
-    self.angle += 0.01
+    self.angle += self.rotate_angle
     x = self.radius * math.cos(self.angle)
     z = self.radius * math.sin(self.angle)
 
