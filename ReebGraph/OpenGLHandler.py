@@ -3,6 +3,10 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
+# Freetype for text rendering
+# import freetype
+
+# Math for sin, cos, etc.
 import math
 
 class OpenGLHandler:
@@ -73,3 +77,14 @@ class OpenGLHandler:
 
     # Set new camera
     self.camera_position = (x, self.camera_position[1], z)
+
+  # def render_text(self, text, x, y, size):
+  #   face = freetype.Face("arial.ttf")
+  #   face.set_char_size(size * 64)
+  #   face.load_char(text)
+  #   bitmap = face.glyph.bitmap
+
+  #   glPixelStorei(GL_UNPACK_ALIGNMENT, 1)
+  #   glRasterPos2f(x, y)
+
+  #   glDrawPixels(bitmap.width, bitmap.rows, GL_ALPHA, GL_UNSIGNED_BYTE, bitmap.buffer)

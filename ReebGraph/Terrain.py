@@ -18,6 +18,7 @@ class Terrain:
     self.vertices = None
     self.faces = None
     self.normals = []
+    self.max_slope = 45
 
   def calculate_face_normal(self, vertex1, vertex2, vertex3):
     # Calculate two vectors from the vertices
@@ -49,6 +50,11 @@ class Terrain:
 
     self.initialize()
 
+  def set_max_slope(self, new_slope):
+    self.max_slope = new_slope
+
+  def decompose(self):
+    return None
 
   def render(self):
     # Draw the mesh
