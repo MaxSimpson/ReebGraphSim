@@ -10,14 +10,17 @@ import Terrain
 import OpenGLHandler
 import time
 
+last_time = time.time()
 
 openGLHandler = OpenGLHandler.OpenGLHandler()
 
 terrain = Terrain.Terrain("hill.obj")
 terrain.parse_file()
 
-terrain.set_max_slope(45)
+terrain.set_max_slope(30)
 terrain.decompose()
+
+print("Loading time:", round(time.time() - last_time,2), "s")
 
 # FPS Counter
 last_time = time.time()
@@ -47,7 +50,5 @@ while not glfw.window_should_close(openGLHandler.get_window()):
     print("Avg FPS:",frame_counter/5)
     frame_counter = 0
     last_time = time.time()
-
-
 
 glfw.terminate()

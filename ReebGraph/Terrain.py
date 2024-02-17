@@ -18,6 +18,7 @@ class Terrain:
     self.vertices = None
     self.faces = None
     self.normals = []
+    self.face_angles = []
     self.max_slope = 45
 
   def calculate_face_normal(self, vertex1, vertex2, vertex3):
@@ -53,17 +54,38 @@ class Terrain:
   def set_max_slope(self, new_slope):
     self.max_slope = new_slope
 
+  def insertion_sort(self):
+    for i in range(1, len(self.faces)):
+        key_angle = self.face_angles[i]
+        key_face = self.faces[i]
+        j = i - 1
+        while j >= 0 and self.face_angles[j] > key_angle:
+            self.face_angles[j + 1] = self.face_angles[j]
+            self.faces[j + 1] = self.faces[j]
+            j -= 1
+        self.face_angles[j + 1] = key_angle
+        self.faces[j + 1] = key_face
+
+
+
   def decompose(self):
-    return None
+    # Calculate normals
+    for face in self.faces:
+      self.face_angles.append(round((1 - np.dot(self.normals[face[3]],(0,1,0)))*90,2))
+
+    # Sorts the normals so they are stored faster
+    self.insertion_sort()
 
   def render(self):
     # Draw the mesh
     glBegin(GL_TRIANGLES)
-    for face in self.faces:
-      glNormal3f(*self.normals[face[3]])
-      glVertex3f(*self.vertices[face[0]])
-      glNormal3f(*self.normals[face[3]])
-      glVertex3f(*self.vertices[face[1]])
-      glNormal3f(*self.normals[face[3]])
-      glVertex3f(*self.vertices[face[2]])
+    for i in range(len(self.faces)):
+      if(self.face_angles[i] > self.max_slope):
+        break
+      glNormal3f(*self.normals[self.faces[i][3]])
+      glVertex3f(*self.vertices[self.faces[i][0]])
+      glNormal3f(*self.normals[self.faces[i][3]])
+      glVertex3f(*self.vertices[self.faces[i][1]])
+      glNormal3f(*self.normals[self.faces[i][3]])
+      glVertex3f(*self.vertices[self.faces[i][2]])
     glEnd()
