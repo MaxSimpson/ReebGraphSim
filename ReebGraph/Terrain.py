@@ -40,8 +40,29 @@ class Terrain:
       self.normals.append(self.calculate_face_normal(self.vertices[self.faces[i][0]], self.vertices[self.faces[i][1]], self.vertices[self.faces[i][2]]))
       self.faces[i] = (*self.faces[i], len(self.normals) - 1)
 
+  def clean_file(self):
+    # Read the input .obj file
+    with open(self.file, 'r') as f:
+        lines = f.readlines()
+
+    processed_lines = []
+    for line in lines:
+        if line.startswith('v '):
+            vertex = line.strip().split()
+            vertex = [f'{float(v):.4f}' for v in vertex[1:]]  # Skip the 'v'
+            processed_line = 'v ' + ' '.join(vertex) + '\n'    # Re-add the 'v'
+        else:
+            processed_line = line
+        processed_lines.append(processed_line)
+
+    # Write the processed lines to the output file
+    with open(self.file, 'w') as f:
+        f.writelines(processed_lines)
 
   def parse_file(self):
+    # Clean File
+    self.clean_file()
+
     # Load OBJ file
     mesh = pywavefront.Wavefront(self.file, collect_faces=True)
 
@@ -80,12 +101,12 @@ class Terrain:
     # Draw the mesh
     glBegin(GL_TRIANGLES)
     for i in range(len(self.faces)):
-      if(self.face_angles[i] > self.max_slope):
+      if(self.face_angles[i] > self.max_slope): 
         break
       glNormal3f(*self.normals[self.faces[i][3]])
       glVertex3f(*self.vertices[self.faces[i][0]])
       glNormal3f(*self.normals[self.faces[i][3]])
-      glVertex3f(*self.vertices[self.faces[i][1]])
+      glVertex3f(*self.vertices[self.faces[i][1]])  
       glNormal3f(*self.normals[self.faces[i][3]])
       glVertex3f(*self.vertices[self.faces[i][2]])
     glEnd()
