@@ -1,6 +1,14 @@
 class ReebGraph:
-  def __init__(self) -> None:
-    pass
+  def __init__(self, vertices, triangles):
+    print("Constructing reeb graph")
+    # Sort vertices
+
+    # Decompose
+    # Initilaize graph
+    # graph stuff
+    # embed graph
+    
+
   
 class ReebNode:
   def __init__(self) -> None:

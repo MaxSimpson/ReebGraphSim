@@ -87,8 +87,6 @@ class Terrain:
         self.face_angles[j + 1] = key_angle
         self.faces[j + 1] = key_face
 
-
-
   def decompose(self):
     # Calculate normals
     for face in self.faces:
@@ -110,3 +108,9 @@ class Terrain:
       glNormal3f(*self.normals[self.faces[i][3]])
       glVertex3f(*self.vertices[self.faces[i][2]])
     glEnd()
+
+  def get_vertices(self):
+    return self.vertices
+  
+  def get_faces(self):
+    return self.faces 

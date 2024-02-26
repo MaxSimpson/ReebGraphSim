@@ -12,10 +12,10 @@ import math
 class OpenGLHandler:
   def __init__(self):
     # Camera coordinates
-    self.camera_position = [5, 2, 5]
+    self.camera_position = [5, 5, 5]
     self.camera_target = [0, 0, 0]
 
-    self.rotate_angle = 0.03
+    self.rotate_angle = math.pi / 8
     self.angle = 0
     self.radius = 5
 
@@ -25,7 +25,7 @@ class OpenGLHandler:
 
     # Set window parameters
     width, height = 800, 600
-    self.window = glfw.create_window(width, height, "OpenGL Window", None, None)
+    self.window = glfw.create_window(width, height, "Reeb Graph", None, None)
     if not self.window:
       glfw.terminate()
       raise Exception("Failed to create GLFW window")
@@ -69,9 +69,9 @@ class OpenGLHandler:
   def set_camera_position(self, new_position):
     self.camera_position = new_position
 
-  def rotate_camera_circle(self):
+  def rotate_camera_circle(self, delta_time):
     # Rotate Camera Position
-    self.angle += self.rotate_angle
+    self.angle += (self.rotate_angle * delta_time)
     x = self.radius * math.cos(self.angle)
     z = self.radius * math.sin(self.angle)
 
