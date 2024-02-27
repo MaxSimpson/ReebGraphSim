@@ -37,8 +37,20 @@ class Terrain:
   # Compute normals
   def initialize(self):
     for i in range(len(self.faces)):
-      self.normals.append(self.calculate_face_normal(self.vertices[self.faces[i][0]], self.vertices[self.faces[i][1]], self.vertices[self.faces[i][2]]))
-      self.faces[i] = (*self.faces[i], len(self.normals) - 1)
+      # Calculate normals
+      normal = self.calculate_face_normal(self.vertices[self.faces[i][0]], self.vertices[self.faces[i][1]], self.vertices[self.faces[i][2]])
+      normalIndex = len(self.normals)
+
+      # If it already exists use existing normal
+      if normal not in self.normals:
+        self.normals.append(normal)
+      else:
+        normalIndex = self.normals.index(normal)
+         
+      # Store face vertices and normal index in face
+      self.faces[i] = (*self.faces[i], normalIndex)
+
+    
 
   def clean_file(self):
     # Read the input .obj file
@@ -75,6 +87,13 @@ class Terrain:
   def set_max_slope(self, new_slope):
     self.max_slope = new_slope
 
+  def change_max_slope(self, change_in_slope):
+    self.max_slope += change_in_slope
+    if(self.max_slope > 90):
+      self.max_slope = 90
+    elif(self.max_slope < 0):
+       self.max_slope = 0
+
   def insertion_sort(self):
     for i in range(1, len(self.faces)):
         key_angle = self.face_angles[i]
@@ -95,6 +114,7 @@ class Terrain:
     # Sorts the normals so they are stored faster
     self.insertion_sort()
 
+
   def render(self):
     # Draw the mesh
     glBegin(GL_TRIANGLES)
@@ -114,3 +134,4 @@ class Terrain:
   
   def get_faces(self):
     return self.faces 
+  

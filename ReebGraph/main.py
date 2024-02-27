@@ -16,13 +16,26 @@ last_time = time.time()
 
 openGLHandler = OpenGLHandler.OpenGLHandler()
 
-terrain = Terrain.Terrain("square.obj")
+
+terrain = Terrain.Terrain("hill.obj")
 terrain.parse_file()
 
 terrain.set_max_slope(30)
 terrain.decompose()
 
 reebGraph = ReebGraphConstruction.ReebGraph(terrain.get_vertices(), terrain.get_faces())
+
+# Establish key callbacks
+def key_callback(window, key, scancode, action, mods):
+  if key == glfw.KEY_Q and action == glfw.PRESS:
+    glfw.set_window_should_close(window, True)  # Close the window if 'Q' key is pressed
+  elif key == glfw.KEY_W:
+    terrain.change_max_slope(1)
+  elif key == glfw.KEY_S:
+    terrain.change_max_slope(-1)
+
+# Set the key callback function
+glfw.set_key_callback(openGLHandler.get_window(), key_callback)
 
 print("Loading time:", round(time.time() - last_time,2), "s")
 
@@ -33,9 +46,6 @@ frame_counter = 0
 
 # Render loop
 while not glfw.window_should_close(openGLHandler.get_window()):
-  # Handle key input
-  # TODO!!!
-
   # OpenGL update per frame
   openGLHandler.update()
 
