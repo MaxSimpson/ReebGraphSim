@@ -17,7 +17,7 @@ last_time = time.time()
 openGLHandler = OpenGLHandler.OpenGLHandler()
 
 
-terrain = Terrain.Terrain("hill.obj")
+terrain = Terrain.Terrain("square.obj")
 terrain.parse_file()
 
 terrain.set_max_slope(30)
@@ -58,7 +58,10 @@ while not glfw.window_should_close(openGLHandler.get_window()):
   last_frame_time = time.time()
 
   # Render terrain model
-  terrain.render()
+  #terrain.render(wireframe=True)
+
+  # Rendering Reeb Graph
+  reebGraph.render() 
 
   # Swap displayed window after re-rendering
   glfw.swap_buffers(openGLHandler.get_window())

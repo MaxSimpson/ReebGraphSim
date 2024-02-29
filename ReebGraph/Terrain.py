@@ -84,10 +84,10 @@ class Terrain:
 
     self.initialize()
 
-  def set_max_slope(self, new_slope):
+  def set_max_slope(self, new_slope : int):
     self.max_slope = new_slope
 
-  def change_max_slope(self, change_in_slope):
+  def change_max_slope(self, change_in_slope : int):
     self.max_slope += change_in_slope
     if(self.max_slope > 90):
       self.max_slope = 90
@@ -115,19 +115,29 @@ class Terrain:
     self.insertion_sort()
 
 
-  def render(self):
+  def render(self, wireframe : bool = False):
     # Draw the mesh
-    glBegin(GL_TRIANGLES)
-    for i in range(len(self.faces)):
-      if(self.face_angles[i] > self.max_slope): 
-        break
-      glNormal3f(*self.normals[self.faces[i][3]])
-      glVertex3f(*self.vertices[self.faces[i][0]])
-      glNormal3f(*self.normals[self.faces[i][3]])
-      glVertex3f(*self.vertices[self.faces[i][1]])  
-      glNormal3f(*self.normals[self.faces[i][3]])
-      glVertex3f(*self.vertices[self.faces[i][2]])
-    glEnd()
+
+    if wireframe:
+      glBegin(GL_LINES)
+      glColor3f(0.0, 1.0, 0.0) # Set color to green
+      # for edge in self.edges:
+      #   glVertex3f(*self.vertices[edge.node1])
+      #   glVertex3f(*self.vertices[edge.node2])
+      # glEnd()
+    else:
+      glBegin(GL_TRIANGLES)
+      glColor3f(0.0, 1.0, 0.0) # Set color to green
+      for i in range(len(self.faces)):
+        if(self.face_angles[i] > self.max_slope): 
+          break
+        glNormal3f(*self.normals[self.faces[i][3]])
+        glVertex3f(*self.vertices[self.faces[i][0]])
+        glNormal3f(*self.normals[self.faces[i][3]])
+        glVertex3f(*self.vertices[self.faces[i][1]])  
+        glNormal3f(*self.normals[self.faces[i][3]])
+        glVertex3f(*self.vertices[self.faces[i][2]])
+      glEnd()
 
   def get_vertices(self):
     return self.vertices
