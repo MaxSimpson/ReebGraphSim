@@ -17,9 +17,10 @@ class Terrain:
     # Terrain data
     self.vertices = None
     self.faces = None
-    self.normals = []
-    self.face_angles = []
+    self.normals: list[int] = []
+    self.face_angles: list[float] = []
     self.max_slope = 45
+    self.edges: list[MeshEdge] = [] 
 
   def calculate_face_normal(self, vertex1, vertex2, vertex3):
     # Calculate two vectors from the vertices
@@ -117,15 +118,19 @@ class Terrain:
 
   def render(self, wireframe : bool = False):
     # Draw the mesh
-
-    if wireframe:
+    
+    if wireframe: # Render in wireframe mode
       glBegin(GL_LINES)
       glColor3f(0.0, 1.0, 0.0) # Set color to green
-      # for edge in self.edges:
-      #   glVertex3f(*self.vertices[edge.node1])
-      #   glVertex3f(*self.vertices[edge.node2])
-      # glEnd()
-    else:
+      for face in self.faces:
+        glVertex3f(*self.vertices[face[0]])
+        glVertex3f(*self.vertices[face[1]])
+        glVertex3f(*self.vertices[face[1]])
+        glVertex3f(*self.vertices[face[2]])
+        glVertex3f(*self.vertices[face[2]])
+        glVertex3f(*self.vertices[face[0]])
+      glEnd()
+    else: # Render normally using triangles
       glBegin(GL_TRIANGLES)
       glColor3f(0.0, 1.0, 0.0) # Set color to green
       for i in range(len(self.faces)):

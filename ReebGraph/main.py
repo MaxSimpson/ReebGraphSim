@@ -58,10 +58,10 @@ while not glfw.window_should_close(openGLHandler.get_window()):
   last_frame_time = time.time()
 
   # Render terrain model
-  #terrain.render(wireframe=True)
+  terrain.render(wireframe=True)
 
   # Rendering Reeb Graph
-  reebGraph.render() 
+  # reebGraph.render() 
 
   # Swap displayed window after re-rendering
   glfw.swap_buffers(openGLHandler.get_window())

@@ -77,3 +77,4 @@ class OpenGLHandler:
 
     # Set new camera
     self.camera_position = (x, self.camera_position[1], z)
+
