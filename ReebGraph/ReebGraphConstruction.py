@@ -35,55 +35,68 @@ class ReebGraph:
     self.vertices = vertices # Required for rendering later
 
     # Edges of Tetrahedralization
-    self.edges : list[tuple[MeshEdge, id]] = []
+    self.edges : list[MeshEdge] = []
 
-
-    # Sort vertices by morse function
+    # Sort vertices by morse function (RG.CPP 290 - 298)
     sorted_vertex_indices = MorseFunction.sort_vertices(vertices)
 
-    # Order triangle vertices first
+    # Order triangle vertices first (RG.CPP 303 - 311)
     sorted_triangles_vertices : list[tuple] = MorseFunction.sort_triangles(sorted_vertex_indices, triangles)
 
     # Initialize graph
-    # Create vertices of Reeb Graph
+    # Create vertices of Reeb Graph (RG.CPP 287 - 288)
     for counter, vertex in enumerate(vertices):
       self.reeb_nodes.append(ReebNode(counter))
 
-    # Create edges of Reeb Graph
+    # Add each edge to RG as seperate ReebArcs (RG.CPP 314 - 324)
+    counter = 0
     for triangle in sorted_triangles_vertices:
-      counter += self.add_triangle_mesh_edges(triangle)
-      # self.edges.append((MeshEdge(triangle[0], triangle[1]), counter))
-      # self.edges.append((MeshEdge(triangle[1], triangle[2]), counter))
-      # self.edges.append((MeshEdge(triangle[0], triangle[2]), counter))
+      counter += self.add_triangle_mesh_edges(triangle, counter)
 
-    print(self.edges)
+    # Call MergePaths on each triangle
 
-
-
-    # Full merge paths
-      # For each triangle merge the whole path from the mesh edges 
-      # 
-
-
-    # Merge longest edge of every triangle
-    # counter = 0
-    # for triangle in sorted_triangles_vertices:
-    #   print("merging ", self.reeb_edges[counter])
-    #   self.reeb_edges[counter].merge(self.reeb_edges[counter + 2])
-    #   self.reeb_edges[counter + 1].merge(self.reeb_edges[counter + 2])
-
-    #   counter += 3
-
+    # Remove all 2 node edges from the graph (simplfiying) 
 
     print(sorted_triangles_vertices)
+    print(self.reeb_edges)
     for obj in self.reeb_edges:
       print(obj, " ", end="")
 
-    # Construct Graph stuff
     # embed graph
+  
+
+  # Create mesh edges in the model based on a triangle and that triangles ID
+  def add_triangle_mesh_edges(self, triangle : tuple, triangle_id : int) -> int:
+    arcs_added = 0 # Counter for the number of new arcs
+
+    # Record how many arcs we actually added (some triangles share mesh edges so ignore)
+    arcs_added += self.create_arc(triangle[0], triangle[2], [triangle_id])
+    arcs_added += self.create_arc(triangle[0], triangle[1], [triangle_id])
+    arcs_added += self.create_arc(triangle[1], triangle[2], [triangle_id])
+
+    # Return the number of new arcs
+    return arcs_added
+
+
+  def create_arc(self, start_index : int, end_index : int, faces : list[int]) -> int:
+    new_edge = MeshEdge(start_index, end_index) # New edge to try and add to graph
+
+    # If edge does not exist add an edge in both triangle edges set and reeb arc set
+    if self.edges.count(new_edge) == 0:
+      new_edge.increment_number_of_triangles()
+      self.edges.append(new_edge)
+      reeb_graph_edge = ReebEdge(start_index, end_index, )
+
+    # Associate triangles with edge's reeb arcs
+
       
 
-  # 
+
+    return 0
+
+    
+
+  # Add reeb edge to the graph
   def add_reeb_edge(self, new_edge: ReebEdge) -> bool:
     for edge in self.reeb_edges:
       if new_edge == edge: 

@@ -9,6 +9,9 @@ from OpenGL.GLUT import *
 # Numpy include
 import numpy as np
 
+# RG Library Include
+from MeshEdge import MeshEdge
+
 class Terrain:
   def __init__ (self, file):
     # Store file location
