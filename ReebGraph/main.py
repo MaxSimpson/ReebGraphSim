@@ -17,7 +17,7 @@ last_time = time.time()
 openGLHandler = OpenGLHandler.OpenGLHandler()
 
 
-terrain = Terrain.Terrain("square.obj")
+terrain = Terrain.Terrain("2square.obj")
 terrain.parse_file()
 
 terrain.set_max_slope(30)
@@ -70,7 +70,7 @@ while not glfw.window_should_close(openGLHandler.get_window()):
   if time.time() - 5 < avg_fps_time:
     frame_counter += 1
   else:
-    print("Avg FPS:",frame_counter/5)
+    # print("Avg FPS:",frame_counter/5)
     frame_counter = 0
     avg_fps_time = time.time()
 
