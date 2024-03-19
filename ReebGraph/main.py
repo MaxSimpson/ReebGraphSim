@@ -17,7 +17,7 @@ last_time = time.time()
 openGLHandler = OpenGLHandler.OpenGLHandler()
 
 
-terrain = Terrain.Terrain("2square.obj")
+terrain = Terrain.Terrain("square.obj")
 terrain.parse_file()
 
 terrain.set_max_slope(30)
@@ -52,7 +52,7 @@ while not glfw.window_should_close(openGLHandler.get_window()):
   # Calculate delta time
   delta_time = time.time() - last_frame_time
   # Rotate Camera
-  openGLHandler.rotate_camera_circle(delta_time)
+  # openGLHandler.rotate_camera_circle(delta_time)
 
   # Time before rendering
   last_frame_time = time.time()

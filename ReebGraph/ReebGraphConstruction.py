@@ -191,20 +191,20 @@ class ReebGraph:
     print(a1)
 
     # Case: targets are not equal. Insert new edge from a0's target to a1's target
-    # if a0.end != a1.end:
-    #   new_edge = next((edge for edge in self.mesh_edges if edge == ReebEdge(a0.end, a1.end, a1.get_mesh_edge_indices())), None)
-      # if self.mesh_edges.count(ReebEdge(a0.end, a1.end, a1.get_mesh_edge_indices())) == 0: # MODIFIED HERE IDK WTF IS UP
-      # self.reeb_edges.append(ReebEdge(a0.end, a1.end, a1.get_mesh_edge_indices()))
-      # print("new RE", self.reeb_edges[-1])
-      # new_id : int = len(self.reeb_edges) - 1
-      # for edge in self.reeb_edges[new_id].edges:
-      #   self.mesh_edges[edge].insert(new_id)
-      # else:
-      #   existing_edge = next((edge for edge in self.mesh_edges if edge == ReebEdge(a0.end, a1.end, a1.get_mesh_edge_indices())), None)
-      #   existing_edge.arc_sets.extend(a1.get_mesh_edge_indices())
+    if a0.end != a1.end:
+      new_edge = next((edge for edge in self.mesh_edges if edge == ReebEdge(a0.end, a1.end, a1.get_mesh_edge_indices())), None)
+      if self.mesh_edges.count(ReebEdge(a0.end, a1.end, a1.get_mesh_edge_indices())) == 0: # MODIFIED HERE IDK WTF IS UP
+        self.reeb_edges.append(ReebEdge(a0.end, a1.end, a1.get_mesh_edge_indices()))
+        print("new RE", self.reeb_edges[-1])
+        new_id : int = len(self.reeb_edges) - 1
+        for edge in self.reeb_edges[new_id].edges:
+          self.mesh_edges[edge].insert(new_id)
+      else:
+        existing_edge = next((edge for edge in self.mesh_edges if edge == ReebEdge(a0.end, a1.end, a1.get_mesh_edge_indices())), None)
+        existing_edge.arc_sets.extend(a1.get_mesh_edge_indices())
 
+    # Delete a1
     # Removing edge so decrease all other reeb edge indices
-
     print("Deleting:", self.reeb_edges[_a1])
     del self.reeb_edges[_a1]
     for edge in self.mesh_edges:
