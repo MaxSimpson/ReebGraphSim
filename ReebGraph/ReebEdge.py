@@ -5,11 +5,11 @@ from MeshEdge import MeshEdge
 # Another name for ReebArc (CPP Version)
 class ReebEdge:
   def __init__(self, _start : int, _end : int, mesh_edge_index : list[int] = None):
-    # Store nodes indices that edge connects
+    # Store nodes indices that edge connects (starting and ending)
     self.start : int = _start
     self.end : int = _end
 
-    self.faces : list[int] = []
+    self.faces : list[int] = [] # Faces associated with this Reeb Edge
     
     # Related Mesh Edges
     self.edges : list[int] = []

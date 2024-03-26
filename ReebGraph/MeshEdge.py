@@ -46,10 +46,11 @@ class MeshEdge:
   def get_end(self) -> int:
     return self.end
   
-  # Increment number of triangles
+  # Increment counter for number of triangles associated with this Mesh Edge
   def increment_number_of_triangles(self) -> None:
     self.number_of_triangles += 1
 
+  # Decrement counter for number of triangles associated with this Mesh Edge
   def decrement_number_of_triangles(self) -> None:
     self.number_of_triangles -= 1
 

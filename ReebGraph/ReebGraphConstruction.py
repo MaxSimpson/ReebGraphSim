@@ -123,9 +123,9 @@ class ReebGraph:
       # if e2.number_of_triangles == 0:
       #   self.delete_mesh_edge(e2)
 
-
     # Remove all 2 node edges from the graph (simplfiying) 
       
+    # Outputs      
     print("\nMesh Edges After")
     for edge in self.mesh_edges:
       print(edge)
