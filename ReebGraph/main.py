@@ -16,8 +16,7 @@ last_time = time.time()
 
 openGLHandler = OpenGLHandler.OpenGLHandler()
 
-
-terrain = Terrain.Terrain("square.obj")
+terrain = Terrain.Terrain("2square.obj")
 terrain.parse_file()
 
 terrain.set_max_slope(30)

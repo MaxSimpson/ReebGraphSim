@@ -14,24 +14,24 @@ class MeshEdge:
     return "(" + str(self.start) + " " + str(self.end) + " " + str(self.arc_sets) + ")"
   
   def adjust_reeb_indices(self, _a1 : int):
-    print("\t\t\tadjusting indicies down", self.arc_sets)
+    # print("\t\t\tadjusting indicies down", self.arc_sets)
     for i in range(len(self.arc_sets)):
       if self.arc_sets[i] > _a1:
         self.arc_sets[i] -= 1
-    print("\t\t\tafter adj down:", self.arc_sets)
+    # print("\t\t\tafter adj down:", self.arc_sets)
         
   
   # Inserts a arc index into the arc_set
   def insert(self, index : int) -> None:
-    print("\t\tInserting",index, "into", self.arc_sets)
+    # print("\t\tInserting",index, "into", self.arc_sets)
     self.arc_sets.append(index)
-    print("\t\t", self.arc_sets)
+    # print("\t\t", self.arc_sets)
   
   # Erases an arc_set index
   def erase(self, index : int) -> None:
-    print("\t\tErasing", index, "from", self.arc_sets)
+    # print("\t\tErasing", index, "from", self.arc_sets)
     self.arc_sets.remove(index)
-    print("\t\t", self.arc_sets)
+    # print("\t\t", self.arc_sets)
 
   
   # Returns the arc set

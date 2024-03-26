@@ -9,9 +9,6 @@ from OpenGL.GLUT import *
 # Numpy include
 import numpy as np
 
-# RG Library Include
-from MeshEdge import MeshEdge
-
 class Terrain:
   def __init__ (self, file):
     # Store file location
@@ -23,7 +20,6 @@ class Terrain:
     self.normals: list[int] = []
     self.face_angles: list[float] = []
     self.max_slope = 45
-    self.edges: list[MeshEdge] = [] 
 
   def calculate_face_normal(self, vertex1, vertex2, vertex3):
     # Calculate two vectors from the vertices
