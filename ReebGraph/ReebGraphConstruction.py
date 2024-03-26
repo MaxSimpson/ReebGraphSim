@@ -20,11 +20,9 @@ class MorseFunction:
       morse_values.append(v[0] + v[2])
 
 
-    # Sort indices of vertices by x positions
-    # sorted_indices = 
-      
-    # sorted_indices = sorted(range(len(vertices)), key=lambda i: vertices[i][1]) # 0 here for 4 trigs is broken
-    print(morse_values)
+    # Sort indices of vertices by x positions 
+    sorted_indices = [x for _, x in sorted(zip(morse_values, [i for i in range(len(morse_values))]))]
+
     return sorted_indices
   
   # Sorts triangle vertices based on their positions in the sorted_vertex_indices array
@@ -56,13 +54,13 @@ class ReebGraph:
 
     # self.sorted_vertex_indices = [0, 3, 5, 4, 2, 1]
     print(self.sorted_vertex_indices)
-    exit()
+    # exit()
 
     # Order triangle vertices first (RG.CPP 303 - 311)
     self.sorted_triangles_vertices : list[tuple] = MorseFunction.sort_triangles(self.sorted_vertex_indices, triangles)
     print(self.sorted_triangles_vertices)
 
-    quit()
+    # quit()
 
     # Initialize graph
     # Create vertices of Reeb Graph (RG.CPP 287 - 288)
